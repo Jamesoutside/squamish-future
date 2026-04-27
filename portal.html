@@ -511,7 +511,7 @@ async function verifyAuth() {
       badgeEl.textContent = 'Admin'
       badgeEl.style.background = 'rgba(232,160,32,0.2)'
       badgeEl.style.borderColor = 'rgba(232,160,32,0.4)'
-      badgeEl.style.color = '#e8a020'
+      badgeEl.style.color = '#5BAF3F'
     }
   } catch(e) {
     localStorage.clear(); window.location.href = 'members.html';
@@ -556,7 +556,7 @@ const GROUPS = [
 
 const MEMBERS = [
   // Member directory starts empty — real members added when they sign up
-  // Admins: Austin Neill (austin@squamishfuture.ca) + Kristina (coordinator)
+  // Admins: Austin Neill (austin@squamishcivicforum.ca) + Kristina (coordinator)
 ];
 
 let TASKS = [
@@ -572,7 +572,7 @@ let TASKS = [
   { id:10, title:'April 28 open group event — planning',    group:'events',    status:'inprogress', pri:'h', assign:ME,           due:'Apr 28', me:true,  owned:true  },
   { id:11, title:'April 28 event — invite all contacts',    group:'events',    status:'inprogress', pri:'h', assign:ME,           due:'Apr 26', me:true,  owned:true  },
   { id:12, title:'Group alignment meeting',                  group:'coord',     status:'todo',       pri:'h', assign:ME,           due:'Apr 28', me:true,  owned:true  },
-  { id:13, title:'Website live ✔ (squamishfuture.ca)',       group:'ops',       status:'done',       pri:'h', assign:ME,           due:'Apr 21', me:true,  owned:true  },
+  { id:13, title:'Website live ✔ (squamishcivicforum.ca)',       group:'ops',       status:'done',       pri:'h', assign:ME,           due:'Apr 21', me:true,  owned:true  },
   { id:14, title:'Member portal + signup system setup',      group:'ops',       status:'inprogress', pri:'h', assign:ME,           due:'Apr 28', me:true,  owned:true  },
   { id:15, title:'First social media content calendar',      group:'media',     status:'todo',       pri:'m', assign:ME,           due:'May 1',  me:false, owned:false },
   { id:16, title:'Identify candidate outreach targets',      group:'candidate', status:'todo',       pri:'m', assign:ME,           due:'Jun 1',  me:true,  owned:true  },
@@ -584,7 +584,7 @@ let TASKS = [
 
 const OBJECTIVES = [
   { title:'Launch Squamish Civic Forum publicly', phase:1, deadline:'Apr 28', urgent:true, pct:75, tasks:[
-    {text:'Website live at squamishfuture.ca', done:true, assign:ME},
+    {text:'Website live at squamishcivicforum.ca', done:true, assign:ME},
     {text:'April 21 founding meeting held', done:true, assign:ME},
     {text:'Launch Facebook page', done:false, assign:ME},
     {text:'Set up email signup', done:false, assign:ME},

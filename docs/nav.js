@@ -8,7 +8,7 @@
   var css = `
     #mainNav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
-      background: rgba(15,42,74,0.97);
+      background: rgba(27,61,110,0.97);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       padding: 0 1.5rem;
@@ -16,13 +16,13 @@
       align-items: center;
       justify-content: space-between;
       height: 64px;
-      border-bottom: 1px solid rgba(232,160,32,0.18);
+      border-bottom: 1px solid rgba(46,123,139,0.18);
       box-sizing: border-box;
     }
     body { padding-top: 64px; }
 
     .sf-nav-logo {
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'Lora', Georgia, serif;
       font-size: 1.25rem;
       font-weight: 700;
       color: white;
@@ -33,7 +33,7 @@
       white-space: nowrap;
       flex-shrink: 0;
     }
-    .sf-nav-logo span { color: #e8a020; }
+    .sf-nav-logo span { color: #5BAF3F; }
 
     .sf-nav-links {
       display: flex;
@@ -55,7 +55,7 @@
     .sf-nav-link {
       color: rgba(255,255,255,0.72);
       text-decoration: none;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Open Sans', sans-serif;
       font-size: 0.8rem;
       font-weight: 600;
       letter-spacing: 0.04em;
@@ -71,8 +71,8 @@
       background: none;
       cursor: pointer;
     }
-    .sf-nav-link:hover { color: #e8a020; }
-    .sf-nav-item:hover > .sf-nav-link { color: #e8a020; }
+    .sf-nav-link:hover { color: #5BAF3F; }
+    .sf-nav-item:hover > .sf-nav-link { color: #5BAF3F; }
 
     .sf-nav-arrow {
       font-size: 0.5rem;
@@ -89,7 +89,7 @@
       left: 0;
       min-width: 230px;
       background: rgba(8,15,26,0.99);
-      border: 1px solid rgba(232,160,32,0.2);
+      border: 1px solid rgba(46,123,139,0.2);
       border-radius: 10px;
       padding: 0.4rem 0;
       box-shadow: 0 16px 48px rgba(0,0,0,0.5);
@@ -119,7 +119,7 @@
       font-weight: 700;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: rgba(232,160,32,0.55);
+      color: rgba(46,123,139,0.55);
       padding: 0.45rem 1rem 0.2rem;
     }
 
@@ -130,14 +130,14 @@
       padding: 0.55rem 1rem;
       color: rgba(255,255,255,0.72);
       text-decoration: none;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Open Sans', sans-serif;
       font-size: 0.83rem;
       font-weight: 500;
       transition: background 0.15s, color 0.15s;
       white-space: nowrap;
     }
     .sf-dd-link:hover {
-      background: rgba(232,160,32,0.09);
+      background: rgba(46,123,139,0.09);
       color: white;
     }
     .sf-dd-icon {
@@ -158,7 +158,7 @@
 
     /* ── CTA BUTTON ── */
     .sf-nav-cta {
-      background: #e8a020 !important;
+      background: #5BAF3F !important;
       color: #0f2a4a !important;
       padding: 0.45rem 1.1rem !important;
       border-radius: 6px !important;
@@ -166,7 +166,7 @@
       height: auto !important;
       margin-left: 0.4rem;
     }
-    .sf-nav-cta:hover { background: #c98a10 !important; }
+    .sf-nav-cta:hover { background: #236070 !important; }
 
     /* ── HAMBURGER ── */
     .sf-hamburger {
@@ -203,7 +203,7 @@
         max-height: calc(100vh - 64px);
         height: auto;
         z-index: 9998;
-        border-top: 1px solid rgba(232,160,32,0.15);
+        border-top: 1px solid rgba(46,123,139,0.15);
       }
       .sf-nav-links.sf-open .sf-nav-item { height: auto; width: 100%; }
       .sf-nav-links.sf-open .sf-nav-link {
@@ -218,7 +218,7 @@
         transform: none;
         box-shadow: none;
         border: none;
-        border-left: 2px solid rgba(232,160,32,0.25);
+        border-left: 2px solid rgba(46,123,139,0.25);
         margin-left: 1.2rem;
         border-radius: 0;
         background: transparent;
@@ -240,7 +240,18 @@
 
   // ── BUILD NAV HTML ────────────────────────────────────────────────
   var navHTML = `
-    <a href="../index.html" class="sf-nav-logo">Squamish <span>Future</span></a>
+    <a href="../index.html" class="sf-nav-logo" style="display:flex;align-items:center;gap:0.55rem;">
+      <svg width="36" height="22" viewBox="0 0 90 55" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+        <polygon points="28,54 13,7 0,54" fill="#1B3D6E"/>
+        <polygon points="56,54 41,14 26,54" fill="#244E8A"/>
+        <polygon points="80,54 65,22 50,54" fill="#2E7B8B"/>
+        <path d="M0,56 Q14,42 28,47 Q44,38 60,44 Q74,37 90,43 L90,56 Z" fill="#5BAF3F"/>
+      </svg>
+      <span style="display:flex;flex-direction:column;line-height:1.1;">
+        <span style="font-size:1rem;font-weight:700;color:#fff;letter-spacing:0.01em;">Squamish <span style="color:#5BAF3F;">Civic Forum</span></span>
+        <span style="font-size:0.6rem;font-weight:600;color:rgba(255,255,255,0.4);letter-spacing:0.1em;text-transform:uppercase;">Growing Grassroots Engagement</span>
+      </span>
+    </a>
 
     <ul class="sf-nav-links" id="sfNavLinks">
 

@@ -1,40 +1,40 @@
 /*
- * SQUAMISH FUTURE — Brand System
- * Version 1.0 | March 2026
+ * SQUAMISH CIVIC FORUM — Brand System
+ * Version 2.0 | April 2026
  * ─────────────────────────────────────────────────────────
- * Wordmark:  SQUAMISH FUTURE — all caps, Playfair Display
- * Palette:   Deep navy + Electric teal + White
- * Tagline:   Built by the community. For the community.
- * Mark:      Stawamus Chief silhouette
+ * Wordmark:  Squamish Civic Forum — Lora serif
+ * Palette:   Deep navy + Mountain teal + Forest green
+ * Tagline:   Growing Grassroots Engagement
+ * Mark:      Mountain landscape (Stawamus Chief inspired)
  * Voice:     Community Convener — warm, inclusive, inviting
- * Texture:   Movement Energy + Community Warmth
+ * Texture:   Place-based, civic, transparent
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,600;0,700;1,600&family=Open+Sans:wght@300;400;600;700;800&display=swap');
 
 /* ── TOKENS ──────────────────────────────────────────── */
 :root {
-  /* Core palette */
-  --navy:        #0f2a4a;   /* Primary — deep authority */
-  --navy-dark:   #080f1a;   /* Footer / deepest */
-  --navy-mid:    #1a3a5c;   /* Mid navy */
-  --teal:        #e8a020;   /* Gold — primary accent */
-  --teal-dark:   #c98a10;   /* Gold hover / pressed */
-  --teal-light:  #fff3dc;   /* Gold tint for backgrounds */
-  --teal-glow:   rgba(232, 160, 32, 0.18); /* Gold glow/shadow */
-  --amber:       #e8a020;   /* Gold */
-  --amber-light: #fff3dc;   /* Gold tint */
-  --green:       #1e8449;   /* Status: active / success */
+  /* Core palette — Squamish Civic Forum */
+  --navy:        #1B3D6E;   /* Primary — deep navy (mountain peaks) */
+  --navy-dark:   #0f2445;   /* Footer / deepest */
+  --navy-mid:    #244E8A;   /* Mid navy */
+  --teal:        #2E7B8B;   /* Mountain teal — secondary */
+  --teal-dark:   #236070;   /* Teal hover / pressed */
+  --teal-light:  #E4F4F6;   /* Teal tint for backgrounds */
+  --teal-glow:   rgba(46, 123, 139, 0.22); /* Teal glow/shadow */
+  --amber:       #5BAF3F;   /* Forest green — accent */
+  --amber-light: #EBF7E5;   /* Green tint */
+  --green:       #4A9E30;   /* Status: active / success */
   --white:       #ffffff;
-  --off-white:   #f8fbff;   /* Page backgrounds */
-  --light:       #f0f6ff;   /* Card backgrounds */
-  --border:      #dce8f5;   /* Borders */
-  --grey:        #6b7280;   /* Body text secondary */
+  --off-white:   #f8faf5;   /* Page backgrounds — slight green warmth */
+  --light:       #EFF4F8;   /* Card backgrounds */
+  --border:      #D5E3EE;   /* Borders */
+  --grey:        #5A6478;   /* Body text secondary */
   --dark:        #111827;   /* Primary body text */
 
   /* Typography */
-  --font-display: 'Playfair Display', Georgia, serif;
-  --font-body:    'Inter', system-ui, sans-serif;
+  --font-display: 'Lora', Georgia, serif;
+  --font-body:    'Open Sans', system-ui, sans-serif;
 
   /* Spacing */
   --radius-sm:   6px;
@@ -84,7 +84,7 @@ body {
   padding: 0 2rem;
   display: flex; align-items: center; justify-content: space-between;
   height: 66px;
-  border-bottom: 1px solid rgba(0, 196, 179, 0.15);
+  border-bottom: 1px solid rgba(46, 123, 139, 0.2);
 }
 .sf-nav-links { display: flex; gap: 1.8rem; list-style: none; align-items: center; }
 .sf-nav-links a {
@@ -108,7 +108,7 @@ body {
 }
 .sf-nav-cta:hover {
   background: var(--teal-dark) !important;
-  box-shadow: var(--shadow-teal) !important;
+  box-shadow: 0 4px 16px rgba(46,123,139,0.3) !important;
 }
 
 /* ── TYPOGRAPHY ───────────────────────────────────────── */
@@ -200,8 +200,8 @@ body {
 .hero-bg::before {
   content: '';
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 30% 50%, rgba(0,196,179,0.08) 0%, transparent 65%),
-              url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+  background: radial-gradient(ellipse at 30% 50%, rgba(46,123,139,0.1) 0%, transparent 65%),
+              radial-gradient(ellipse at 80% 80%, rgba(91,175,63,0.06) 0%, transparent 60%);
 }
 
 /* ── CARDS ────────────────────────────────────────────── */
@@ -214,7 +214,7 @@ body {
 }
 .card:hover {
   box-shadow: var(--shadow-md);
-  border-color: rgba(0,196,179,0.35);
+  border-color: rgba(46,123,139,0.35);
   transform: translateY(-2px);
 }
 .card-dark {
@@ -225,7 +225,7 @@ body {
 }
 .card-teal {
   background: var(--teal-light);
-  border: 1px solid rgba(0,196,179,0.25);
+  border: 1px solid rgba(46,123,139,0.25);
   border-radius: var(--radius-lg);
   padding: 1.8rem;
 }
@@ -257,7 +257,7 @@ body {
 .sf-field select:focus,
 .sf-field textarea:focus {
   border-color: var(--teal);
-  box-shadow: 0 0 0 3px rgba(0,196,179,0.12);
+  box-shadow: 0 0 0 3px rgba(46,123,139,0.14);
 }
 .sf-field textarea { resize: vertical; min-height: 90px; }
 
@@ -270,7 +270,7 @@ body {
   font-weight: 700;
   letter-spacing: 0.05em;
 }
-.badge-teal   { background: var(--teal-light); color: var(--teal-dark); border: 1px solid rgba(0,196,179,0.3); }
+.badge-teal   { background: var(--teal-light); color: var(--teal-dark); border: 1px solid rgba(46,123,139,0.3); }
 .badge-navy   { background: rgba(15,42,74,0.08); color: var(--navy); border: 1px solid rgba(15,42,74,0.15); }
 .badge-green  { background: rgba(30,132,73,0.1); color: var(--green); border: 1px solid rgba(30,132,73,0.25); }
 .badge-amber  { background: var(--amber-light); color: #a07010; border: 1px solid rgba(232,160,32,0.3); }
@@ -287,7 +287,7 @@ body {
 .sf-footer {
   background: var(--navy-dark);
   padding: 3.5rem 2rem;
-  border-top: 2px solid rgba(0,196,179,0.12);
+  border-top: 2px solid rgba(46,123,139,0.2);
 }
 .sf-footer-inner {
   max-width: 1100px; margin: 0 auto;
@@ -309,8 +309,11 @@ body {
 .sf-footer-links a:hover { color: var(--teal); }
 .sf-footer-copy { color: rgba(255,255,255,0.2); font-size: 0.78rem; margin-top: 0.4rem; }
 
-/* ── CHIEF SVG MARK ───────────────────────────────────── */
-.chief-svg { display: block; }
+/* ── MOUNTAIN MARK ───────────────────────────────────── */
+.mountain-mark { display: block; }
+
+/* ── CIVIC FORUM LOGO SVG ─────────────────────────────── */
+.scf-logo-svg { height: 28px; width: auto; display: block; }
 
 /* ── UTILITY ──────────────────────────────────────────── */
 .text-teal   { color: var(--teal); }
