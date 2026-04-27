@@ -169,6 +169,7 @@
   <span class="label">Community Issues Tracker</span>
   <h1>What Squamish is talking about</h1>
   <p>Every issue submitted by community members — tracked, researched, and reported on. This is your community's voice in real time.</p>
+  <div style="margin-top:10px;"><span id="live-count-badge" style="background:rgba(91,175,63,0.25);color:#5BAF3F;border:1px solid rgba(91,175,63,0.4);padding:4px 14px;border-radius:20px;font-size:0.78rem;font-weight:700;letter-spacing:0.05em;">🟢 Loading live issues…</span></div>
   <div class="header-stats">
     <div class="hstat"><span class="n" id="totalCount">12</span><span class="l">Issues Tracked</span></div>
     <div class="hstat"><span class="n" id="activeCount">4</span><span class="l">In Research</span></div>
@@ -482,8 +483,43 @@ function vote(id, e) {
   // TODO: persist vote to backend
 }
 
+// ── LOAD LIVE ISSUES FROM SUPABASE STORAGE ─────────────────
+const SB_PUBLIC_ISSUES = 'https://dfcsqpgltjlbzdwxughu.supabase.co/storage/v1/object/public/scf-issues/index.json';
+
+async function loadLiveIssues() {
+  try {
+    const res = await fetch(SB_PUBLIC_ISSUES + '?t=' + Date.now());
+    if (!res.ok) return;
+    const live = await res.json();
+    if (!live || !live.length) return;
+
+    // Map live issues to the same format as static ISSUES
+    const mapped = live.map((iss, i) => ({
+      id: 90000 + i,
+      title: iss.title,
+      desc: iss.description || '',
+      category: (iss.category || 'community').toLowerCase(),
+      urgency: iss.urgency || 'medium',
+      status: iss.status || 'new',
+      votes: 0,
+      neighbourhood: iss.neighbourhood || 'Squamish',
+      date: iss.created_at ? iss.created_at.split('T')[0] : new Date().toISOString().split('T')[0],
+      comments: 0,
+      live: true
+    }));
+
+    // Prepend live issues (they go to the top)
+    ISSUES.unshift(...mapped);
+
+    // Update the live badge count
+    const badge = document.getElementById('live-count-badge');
+    if (badge) badge.textContent = live.length + ' live';
+  } catch(e) { /* non-blocking */ }
+  filterIssues();
+}
+
 // Init
-filterIssues();
+loadLiveIssues();
 </script>
 <script src="nav.js"></script>
 </body>

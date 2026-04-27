@@ -1099,8 +1099,9 @@ async function renderIssues() {
   if (!rows) return;
   rows.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--grey);">Loading…</div>';
   try {
-    const res = await fetch(API + '/api/issues', { headers: { Authorization: 'Bearer ' + sf_token } });
-    const issues = await res.json();
+    // Load from Supabase Storage (live submitted issues)
+    const liveRes = await fetch('https://dfcsqpgltjlbzdwxughu.supabase.co/storage/v1/object/public/scf-issues/index.json?t=' + Date.now());
+    const issues = liveRes.ok ? await liveRes.json() : [];
     if (!issues.length) {
       rows.innerHTML = '';
       if (empty) empty.style.display = 'block';

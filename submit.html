@@ -635,6 +635,30 @@
       });
 
       if (res.ok) {
+        // Also store in Supabase Storage so tracker can display it live
+        try {
+          const newIssue = {
+            id: crypto.randomUUID(),
+            title, description: fullDesc, category,
+            submitter_name: full_name || 'Community Member',
+            submitter_email: email || null,
+            neighbourhood: document.getElementById('neighbourhood')?.value || null,
+            status: 'new', urgency: 'medium',
+            created_at: new Date().toISOString()
+          };
+          const SB_STORE = 'https://dfcsqpgltjlbzdwxughu.supabase.co';
+          const SB_SVC   = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmY3NxcGdsdGpsYnpkd3h1Z2h1Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MjY3NTM0NywiZXhwIjoyMDg4MjUxMzQ3fQ.d7e-93PlISVrieMRM5rgVEp-Qzrp7Y39XrwQz4LgDpg';
+          const existingRes = await fetch(SB_STORE + '/storage/v1/object/public/scf-issues/index.json');
+          const existing = existingRes.ok ? await existingRes.json() : [];
+          const updated = [newIssue, ...existing];
+          await fetch(SB_STORE + '/storage/v1/object/scf-issues/index.json', {
+            method: 'POST',
+            headers: { 'apikey': SB_SVC, 'Authorization': 'Bearer ' + SB_SVC,
+                        'Content-Type': 'application/json', 'x-upsert': 'true' },
+            body: JSON.stringify(updated)
+          });
+        } catch(e) { /* non-blocking */ }
+
         document.getElementById('section4').style.display = 'none';
         document.querySelector('.form-progress').style.display = 'none';
         document.getElementById('successScreen').classList.add('active');
