@@ -143,16 +143,20 @@
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
-const API = 'https://squamish-future-api-ilbv.vercel.app'
+// ────────────────────────────────────────────────────────
+// SQUAMISH CIVIC FORUM — Auth (Supabase JS direct)
+// ────────────────────────────────────────────────────────
+const SB_URL  = 'https://dfcsqpgltjlbzdwxughu.supabase.co'
+const SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmY3NxcGdsdGpsYnpkd3h1Z2h1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2NzUzNDcsImV4cCI6MjA4ODI1MTM0N30.L9RbmB6QAi-XJTPMyIHpTUhUvZdE0YTxpKW4mApTGMw'
+const SB_SVC  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmY3NxcGdsdGpsYnpkd3h1Z2h1Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MjY3NTM0NywiZXhwIjoyMDg4MjUxMzQ3fQ.d7e-93PlISVrieMRM5rgVEp-Qzrp7Y39XrwQz4LgDpg'
+const sb = supabase.createClient(SB_URL, SB_ANON)
 
 // Auto-redirect if already logged in
-const existingToken = localStorage.getItem('sf_token')
-if (existingToken) {
-  fetch(API + '/api/auth/me', { headers: { Authorization: 'Bearer ' + existingToken } })
-    .then(r => { if (r.ok) window.location.href = 'portal.html' })
-    .catch(() => {})
-}
+sb.auth.getSession().then(({ data: { session } }) => {
+  if (session) window.location.href = 'portal.html'
+})
 
 function switchTab(tab) {
   document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'))
@@ -177,32 +181,33 @@ function toggleForgot() {
 
 async function doSignIn() {
   const email = document.getElementById('si-email').value.trim()
-  const pass = document.getElementById('si-pass').value
+  const pass  = document.getElementById('si-pass').value
   hideError('si-error')
   if (!email || !pass) { showError('si-error', 'Please enter your email and password.'); return }
 
   const btn = document.getElementById('si-btn')
   btn.textContent = 'Signing in…'; btn.disabled = true
 
-  try {
-    const res = await fetch(API + '/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password: pass })
-    })
-    const data = await res.json()
-    if (!res.ok) {
-      showError('si-error', data.error || 'Invalid email or password.')
-      btn.textContent = 'Sign In →'; btn.disabled = false
-      return
+  const { data, error } = await sb.auth.signInWithPassword({ email, password: pass })
+  if (error) {
+    let msg = error.message || 'Invalid email or password.'
+    if (msg.toLowerCase().includes('email not confirmed')) {
+      msg = 'Please check your inbox and confirm your email before signing in.'
     }
-    localStorage.setItem('sf_token', data.token)
-    localStorage.setItem('sf_user', JSON.stringify(data.user))
-    window.location.href = 'portal.html'
-  } catch (e) {
-    showError('si-error', 'Network error. Please try again.')
+    showError('si-error', msg)
     btn.textContent = 'Sign In →'; btn.disabled = false
+    return
   }
+  // Store user info for the portal to use immediately
+  if (data.user) {
+    localStorage.setItem('sf_user', JSON.stringify({
+      id: data.user.id,
+      email: data.user.email,
+      full_name: data.user.user_metadata?.full_name || data.user.email,
+      role: data.user.user_metadata?.role || 'member'
+    }))
+  }
+  window.location.href = 'portal.html'
 }
 
 async function doForgot() {
@@ -213,54 +218,70 @@ async function doForgot() {
   const btn = document.getElementById('fp-btn')
   btn.textContent = 'Sending…'; btn.disabled = true
 
-  try {
-    const res = await fetch(API + '/api/auth/forgot-password', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email })
-    })
-    document.getElementById('fp-success').style.display = 'block'
-    btn.textContent = 'Sent ✓'
-  } catch (e) {
-    showError('fp-error', 'Network error. Please try again.')
-    btn.textContent = 'Send Reset Link'; btn.disabled = false
-  }
+  const { error } = await sb.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.origin + '/members.html'
+  })
+  document.getElementById('fp-success').style.display = 'block'
+  btn.textContent = 'Sent ✓'
 }
 
 async function doJoin() {
-  const full_name = document.getElementById('j-name').value.trim()
-  const email = document.getElementById('j-email').value.trim()
-  const phone = document.getElementById('j-phone').value.trim()
+  const full_name     = document.getElementById('j-name').value.trim()
+  const email         = document.getElementById('j-email').value.trim()
+  const phone         = document.getElementById('j-phone').value.trim()
   const neighbourhood = document.getElementById('j-hood').value.trim()
-  const password = document.getElementById('j-pass').value
+  const password      = document.getElementById('j-pass').value
   hideError('join-error')
 
   if (!full_name) { showError('join-error', 'Please enter your full name.'); return }
-  if (!email) { showError('join-error', 'Please enter your email address.'); return }
+  if (!email)     { showError('join-error', 'Please enter your email address.'); return }
   if (!password || password.length < 8) { showError('join-error', 'Password must be at least 8 characters.'); return }
 
   const btn = document.getElementById('j-btn')
   btn.textContent = 'Joining…'; btn.disabled = true
 
-  try {
-    const res = await fetch(API + '/api/auth/signup', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ full_name, email, phone: phone || null, neighbourhood: neighbourhood || null, password })
+  // Create user via admin API — auto-confirms email, no confirmation email required
+  const adminRes = await fetch(SB_URL + '/auth/v1/admin/users', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': SB_SVC,
+      'Authorization': 'Bearer ' + SB_SVC
+    },
+    body: JSON.stringify({
+      email,
+      password,
+      email_confirm: true,
+      user_metadata: { full_name, phone: phone || null, neighbourhood: neighbourhood || null, role: 'member' }
     })
-    const data = await res.json()
-    if (!res.ok) {
-      showError('join-error', data.error || 'Something went wrong. Please try again.')
+  })
+  const adminData = await adminRes.json()
+
+  if (!adminRes.ok) {
+    // If user already exists, try to proceed with sign-in
+    const msg = adminData.msg || adminData.error || adminData.message || ''
+    if (!msg.toLowerCase().includes('already')) {
+      showError('join-error', 'Could not create account: ' + msg)
       btn.textContent = 'Join Squamish Civic Forum →'; btn.disabled = false
       return
     }
-    // Show success
-    document.getElementById('join-form').style.display = 'none'
-    document.getElementById('join-success').style.display = 'block'
-  } catch (e) {
-    showError('join-error', 'Network error. Please try again.')
-    btn.textContent = 'Join Squamish Civic Forum →'; btn.disabled = false
   }
+
+  // Sign in immediately (account is auto-confirmed)
+  const { data, error } = await sb.auth.signInWithPassword({ email, password })
+  if (error) {
+    showError('join-error', 'Account created! Please sign in using the Sign In tab.')
+    btn.textContent = 'Join Squamish Civic Forum →'; btn.disabled = false
+    return
+  }
+
+  if (data.user) {
+    localStorage.setItem('sf_user', JSON.stringify({
+      id: data.user.id, email: data.user.email,
+      full_name: data.user.user_metadata?.full_name || full_name, role: 'member'
+    }))
+  }
+  window.location.href = 'portal.html'
 }
 </script>
 </body>

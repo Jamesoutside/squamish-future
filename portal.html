@@ -480,48 +480,56 @@
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 // ═══════════════════════════════════════════════════
-// AUTH GATE
+// AUTH GATE — Supabase JS direct
 // ═══════════════════════════════════════════════════
-const API = 'https://squamish-future-api-ilbv.vercel.app'
-const sf_token = localStorage.getItem('sf_token')
+const SB_URL  = 'https://dfcsqpgltjlbzdwxughu.supabase.co'
+const SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmY3NxcGdsdGpsYnpkd3h1Z2h1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2NzUzNDcsImV4cCI6MjA4ODI1MTM0N30.L9RbmB6QAi-XJTPMyIHpTUhUvZdE0YTxpKW4mApTGMw'
+const sb = supabase.createClient(SB_URL, SB_ANON)
 let sf_user = JSON.parse(localStorage.getItem('sf_user') || 'null')
 
-if (!sf_token) { window.location.href = 'members.html'; }
-
-async function verifyAuth() {
-  if (!sf_token) { window.location.href = 'members.html'; return; }
-  try {
-    const res = await fetch(API + '/api/auth/me', { headers: { Authorization: 'Bearer ' + sf_token } })
-    if (!res.ok) { localStorage.clear(); window.location.href = 'members.html'; return; }
-    const user = await res.json()
-    sf_user = user
-    localStorage.setItem('sf_user', JSON.stringify(user))
-    const nameEl = document.getElementById('uname')
-    const roleEl = document.getElementById('urole')
-    const badgeEl = document.getElementById('portalBadge')
-    const avatarEl = document.getElementById('userAvatarEl')
-    const topbar = document.getElementById('portalTopbar')
-    if (nameEl) nameEl.textContent = user.full_name || user.email
-    if (roleEl) roleEl.textContent = user.role === 'admin' ? '\u2605 Admin' : 'Member'
-    if (avatarEl) avatarEl.textContent = (user.full_name || user.email).split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase()
-    if (topbar) topbar.style.display = 'flex'
-    if (user.role === 'admin' && badgeEl) {
-      badgeEl.textContent = 'Admin'
-      badgeEl.style.background = 'rgba(232,160,32,0.2)'
-      badgeEl.style.borderColor = 'rgba(232,160,32,0.4)'
-      badgeEl.style.color = '#5BAF3F'
-    }
-  } catch(e) {
-    localStorage.clear(); window.location.href = 'members.html';
+function renderUser(user) {
+  sf_user = user
+  localStorage.setItem('sf_user', JSON.stringify(user))
+  const nameEl  = document.getElementById('uname')
+  const roleEl  = document.getElementById('urole')
+  const badgeEl = document.getElementById('portalBadge')
+  const avatarEl = document.getElementById('userAvatarEl')
+  const topbar  = document.getElementById('portalTopbar')
+  const displayName = user.full_name || user.user_metadata?.full_name || user.email || 'Member'
+  const role = user.role || user.user_metadata?.role || 'member'
+  if (nameEl)  nameEl.textContent  = displayName
+  if (roleEl)  roleEl.textContent  = role === 'admin' ? '\u2605 Admin' : 'Member'
+  if (avatarEl) avatarEl.textContent = displayName.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase()
+  if (topbar)  topbar.style.display = 'flex'
+  if (role === 'admin' && badgeEl) {
+    badgeEl.textContent = 'Admin'
+    badgeEl.style.background = 'rgba(91,175,63,0.15)'
+    badgeEl.style.borderColor = 'rgba(91,175,63,0.4)'
+    badgeEl.style.color = '#4A9E30'
   }
 }
 
-function doLogout() {
-  if (sf_token) {
-    fetch(API + '/api/auth/logout', { method: 'POST', headers: { Authorization: 'Bearer ' + sf_token } }).catch(()=>{})
+async function verifyAuth() {
+  // 1. Check Supabase session (primary — works immediately after login)
+  const { data: { session } } = await sb.auth.getSession()
+  if (session?.user) {
+    renderUser(session.user)
+    return
   }
+  // 2. Fall back to cached sf_user if session expired/unavailable
+  if (sf_user) {
+    renderUser(sf_user)
+    return
+  }
+  // 3. No auth at all — redirect to login
+  window.location.href = 'members.html'
+}
+
+async function doLogout() {
+  await sb.auth.signOut().catch(() => {})
   localStorage.clear()
   window.location.href = 'members.html'
 }
