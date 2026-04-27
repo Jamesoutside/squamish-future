@@ -311,7 +311,7 @@
 
         <span class="form-section-label">What You Want to Cover</span>
         <div class="sf-field"><label>What issues or topics do you want to focus on?</label>
-          <textarea placeholder="Development? Housing? Recreation? Council accountability? Or just a general Squamish Future intro?"></textarea>
+          <textarea placeholder="Development? Housing? Recreation? Council accountability? Or just a general Squamish Civic Forum intro?"></textarea>
         </div>
         <div class="sf-field"><label>What support do you need from us?</label>
           <textarea rows="2" placeholder="Talking points, printed materials, a presenter, help with promotion, venue suggestions…"></textarea>
@@ -330,7 +330,7 @@
           <ul>
             <li>Talking points on top issues</li>
             <li>Printed materials (if needed)</li>
-            <li>Squamish Future presenter (if requested)</li>
+            <li>Squamish Civic Forum presenter (if requested)</li>
             <li>Event promotion on our channels</li>
             <li>Email signup sheet template</li>
             <li>Follow-up support for attendees</li>
@@ -366,7 +366,7 @@
         <select><option>Select area</option><option>Downtown Squamish</option><option>Garibaldi Highlands</option><option>Brackendale</option><option>Valleycliffe</option><option>Other</option></select>
       </div>
       <div class="sf-field"><label>How did you hear about this event?</label>
-        <select><option>Squamish Future newsletter</option><option>Facebook</option><option>Friend</option><option>Community group</option><option>Other</option></select>
+        <select><option>Squamish Civic Forum newsletter</option><option>Facebook</option><option>Friend</option><option>Community group</option><option>Other</option></select>
       </div>
       <div class="sf-field"><label>Any accessibility needs or questions? (optional)</label><input type="text" placeholder="Parking, accessibility, dietary…" /></div>
       <button class="register-btn" onclick="completeRegistration()">✓ Confirm My Spot</button>
@@ -395,13 +395,13 @@
 <script>
 // ── EVENT DATA ─────────────────────────────────────────────────
 const EVENTS = [
-  { id:1, title:"Community Founding Meeting", type:"community", month:4, day:9, year:2026, time:"6:30 PM", location:"Squamish Public Library — Main Hall", desc:"Our first open community gathering. Come hear the vision, share your issues, and help shape what Squamish Future stands for. Everyone welcome.", spots:80, registered:34 },
+  { id:1, title:"Community Founding Meeting", type:"community", month:4, day:9, year:2026, time:"6:30 PM", location:"Squamish Public Library — Main Hall", desc:"Our first open community gathering. Come hear the vision, share your issues, and help shape what Squamish Civic Forum stands for. Everyone welcome.", spots:80, registered:34 },
   { id:2, title:"Coffee in Garibaldi Highlands", type:"coffee", month:4, day:14, year:2026, time:"10:00 AM", location:"Private home — Garibaldi Highlands (address on registration)", desc:"Informal coffee meetup for Garibaldi Highlands residents. Hosted by a community member. Bring your questions and your neighbours.", spots:15, registered:7 },
   { id:3, title:"Research Volunteer Session", type:"volunteer", month:4, day:18, year:2026, time:"9:00 AM", location:"Online — Zoom link on registration", desc:"Help us pull 2025 council voting records and build our first scorecard. No experience needed — just willingness to dig in.", spots:12, registered:9 },
   { id:4, title:"Coffee at The Ledge Brewing Co.", type:"coffee", month:4, day:22, year:2026, time:"5:30 PM", location:"The Ledge Brewing Co., Downtown Squamish", desc:"After-work informal meetup at The Ledge. Business owners, workers, anyone who wants to chat Squamish issues over a pint.", spots:25, registered:11 },
   { id:5, title:"Issues Forum — Development & Land", type:"forum", month:5, day:7, year:2026, time:"7:00 PM", location:"Brennan Park Recreation Centre, Meeting Room B", desc:"Deep dive into Brendan Park, the Spit, and upcoming development decisions. Panel of researchers + open Q&A.", spots:60, registered:28 },
   { id:6, title:"Coffee in Brackendale", type:"coffee", month:5, day:12, year:2026, time:"10:00 AM", location:"Private home — Brackendale (address on registration)", desc:"Hosted by a long-time Brackendale resident. Focus on Brackendale-specific issues — flooding, infrastructure, community services.", spots:12, registered:4 },
-  { id:7, title:"Canvassing Training Day", type:"volunteer", month:5, day:16, year:2026, time:"10:00 AM", location:"Squamish Future HQ (TBD)", desc:"Learn how to knock doors, have conversations, and log supporter data. We'll cover the script, objection handling, and the app.", spots:20, registered:6 },
+  { id:7, title:"Canvassing Training Day", type:"volunteer", month:5, day:16, year:2026, time:"10:00 AM", location:"Squamish Civic Forum HQ (TBD)", desc:"Learn how to knock doors, have conversations, and log supporter data. We'll cover the script, objection handling, and the app.", spots:20, registered:6 },
   { id:8, title:"Monthly Coffee with Civic", type:"coffee", month:5, day:28, year:2026, time:"6:00 PM", location:"Zephyr Café, Downtown Squamish", desc:"Monthly open meetup. No agenda — just Squamish residents talking about what matters. New faces always welcome.", spots:30, registered:12 },
   { id:9, title:"Issues Forum — Housing & Affordability", type:"forum", month:6, day:10, year:2026, time:"7:00 PM", location:"Squamish Public Library — Main Hall", desc:"Full fact presentation on Squamish's rental vacancy rate, development pipeline, and what policy levers actually work.", spots:80, registered:19 },
   { id:10, title:"Candidate Forum Planning Meeting", type:"community", month:6, day:18, year:2026, time:"6:00 PM", location:"Online — Zoom", desc:"Internal + open planning session for the September Candidate Forum. Help us design the format, questions, and logistics.", spots:25, registered:8 },

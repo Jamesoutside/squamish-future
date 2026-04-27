@@ -1,5 +1,5 @@
 /**
- * Squamish Future — Shared Navigation with Dropdown Menus
+ * Squamish Civic Forum — Shared Navigation with Dropdown Menus
  * Usage: <nav id="mainNav"></nav> then <script src="nav.js"></script>
  */
 (function () {
@@ -360,7 +360,7 @@
         </a>
         <div class="sf-dropdown">
           <div class="sf-dd-section">
-            <span class="sf-dd-label">Squamish Future</span>
+            <span class="sf-dd-label">Squamish Civic Forum</span>
             <a class="sf-dd-link" href="index.html#mission">
               <span class="sf-dd-icon">🎯</span>
               <span class="sf-dd-text"><span class="sf-dd-name">Our Mission</span><span class="sf-dd-desc">Why we exist</span></span>
