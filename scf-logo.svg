@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 72" role="img" aria-label="Squamish Civic Forum">
+
+  <!-- ── MOUNTAIN MARK ─────────────────────────────── -->
+  <!-- Back left peak — tallest, dark navy -->
+  <polygon points="12,62 30,8 48,62" fill="#1B3D6E"/>
+  <!-- Back right peak — slightly shorter, navy -->
+  <polygon points="36,62 56,18 76,62" fill="#1B3D6E" opacity="0.82"/>
+  <!-- Mid teal peak — shorter, offset right -->
+  <polygon points="58,62 74,30 90,62" fill="#2E7B8B"/>
+  <!-- Foreground rolling green hills -->
+  <path d="M0,64 C8,54 18,58 30,54 C42,50 54,56 66,52 C78,48 88,54 96,52 L96,66 Z" fill="#5BAF3F"/>
+  <!-- Clip mountains to viewbox bottom -->
+  <rect x="0" y="64" width="96" height="8" fill="white"/>
+
+  <!-- ── WORDMARK ───────────────────────────────────── -->
+  <!-- "Squamish" — bold serif, navy -->
+  <text x="108" y="32"
+    font-family="Lora, Georgia, serif"
+    font-size="22"
+    font-weight="700"
+    fill="#1B3D6E"
+    letter-spacing="0.5">Squamish</text>
+  <!-- "Civic Forum" — bold serif, navy -->
+  <text x="108" y="54"
+    font-family="Lora, Georgia, serif"
+    font-size="22"
+    font-weight="700"
+    fill="#1B3D6E"
+    letter-spacing="0.5">Civic Forum</text>
+
+  <!-- Tagline -->
+  <text x="109" y="66"
+    font-family="Open Sans, sans-serif"
+    font-size="7.5"
+    font-weight="600"
+    fill="#2E7B8B"
+    letter-spacing="1.5"
+    text-transform="uppercase">GROWING GRASSROOTS ENGAGEMENT</text>
+
+</svg>

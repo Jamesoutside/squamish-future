@@ -240,15 +240,10 @@
 
   // ── BUILD NAV HTML ────────────────────────────────────────────────
   var navHTML = `
-    <a href="../index.html" class="sf-nav-logo" style="display:flex;align-items:center;gap:0.55rem;">
-      <svg width="36" height="22" viewBox="0 0 90 55" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
-        <polygon points="28,54 13,7 0,54" fill="#1B3D6E"/>
-        <polygon points="56,54 41,14 26,54" fill="#244E8A"/>
-        <polygon points="80,54 65,22 50,54" fill="#2E7B8B"/>
-        <path d="M0,56 Q14,42 28,47 Q44,38 60,44 Q74,37 90,43 L90,56 Z" fill="#5BAF3F"/>
-      </svg>
-      <span style="display:flex;flex-direction:column;line-height:1.1;">
-        <span style="font-size:1rem;font-weight:700;color:#fff;letter-spacing:0.01em;">Squamish <span style="color:#5BAF3F;">Civic Forum</span></span>
+    <a href="../index.html" class="sf-nav-logo" style="display:flex;align-items:center;padding:6px 0;">
+      <img src="../scf-logo-nav.svg" alt="Squamish Civic Forum" style="height:40px;width:auto;display:block;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <span style="display:none;flex-direction:column;line-height:1.1;">
+        <span style="font-size:1rem;font-weight:700;color:#fff;">Squamish <span style="color:#5BAF3F;">Civic Forum</span></span>
         <span style="font-size:0.6rem;font-weight:600;color:rgba(255,255,255,0.4);letter-spacing:0.1em;text-transform:uppercase;">Growing Grassroots Engagement</span>
       </span>
     </a>
@@ -347,17 +342,17 @@
       </li>
 
       <li class="sf-nav-item">
-        <a class="sf-nav-link" href="docs/index.html">
+        <a class="sf-nav-link" href="index.html">
           Docs <span class="sf-nav-arrow">▾</span>
         </a>
         <div class="sf-dropdown">
           <div class="sf-dd-section">
             <span class="sf-dd-label">Planning Documents</span>
-            <a class="sf-dd-link" href="docs/master-plan.html">
+            <a class="sf-dd-link" href="master-plan.html">
               <span class="sf-dd-icon">📋</span>
               <span class="sf-dd-text"><span class="sf-dd-name">Master Plan</span><span class="sf-dd-desc">Full strategy + election roadmap</span></span>
             </a>
-            <a class="sf-dd-link" href="docs/society-package.html">
+            <a class="sf-dd-link" href="society-package.html">
               <span class="sf-dd-icon">⚖️</span>
               <span class="sf-dd-text"><span class="sf-dd-name">BC Society Package</span><span class="sf-dd-desc">Incorporation checklist + bylaws</span></span>
             </a>

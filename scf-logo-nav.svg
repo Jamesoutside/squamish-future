@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 52" role="img" aria-label="Squamish Civic Forum">
+
+  <!-- ── MOUNTAIN MARK ─────────────────────────────── -->
+  <!-- Back left peak — tallest, dark navy/teal so visible on dark bg -->
+  <polygon points="8,46 22,6 36,46" fill="#4A8FC0"/>
+  <!-- Back right peak — slightly shorter -->
+  <polygon points="28,46 44,13 60,46" fill="#3A7AB0" opacity="0.9"/>
+  <!-- Mid teal peak -->
+  <polygon points="46,46 59,22 72,46" fill="#2E7B8B"/>
+  <!-- Foreground rolling green hills -->
+  <path d="M0,47 C6,40 14,43 24,40 C34,37 44,42 54,39 C64,36 72,40 78,38 L78,50 Z" fill="#5BAF3F"/>
+
+  <!-- ── WORDMARK (white for dark nav) ─────────────── -->
+  <text x="88" y="24"
+    font-family="Lora, Georgia, serif"
+    font-size="17"
+    font-weight="700"
+    fill="#ffffff"
+    letter-spacing="0.3">Squamish</text>
+  <text x="88" y="42"
+    font-family="Lora, Georgia, serif"
+    font-size="17"
+    font-weight="700"
+    fill="#ffffff"
+    letter-spacing="0.3">Civic Forum</text>
+
+  <!-- Tagline — muted teal -->
+  <text x="89" y="50"
+    font-family="Open Sans, sans-serif"
+    font-size="6"
+    font-weight="600"
+    fill="rgba(255,255,255,0.45)"
+    letter-spacing="1.2">GROWING GRASSROOTS ENGAGEMENT</text>
+
+</svg>

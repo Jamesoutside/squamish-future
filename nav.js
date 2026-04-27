@@ -240,15 +240,10 @@
 
   // ── BUILD NAV HTML ────────────────────────────────────────────────
   var navHTML = `
-    <a href="index.html" class="sf-nav-logo" style="display:flex;align-items:center;gap:0.55rem;">
-      <svg width="36" height="22" viewBox="0 0 90 55" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
-        <polygon points="28,54 13,7 0,54" fill="#1B3D6E"/>
-        <polygon points="56,54 41,14 26,54" fill="#244E8A"/>
-        <polygon points="80,54 65,22 50,54" fill="#2E7B8B"/>
-        <path d="M0,56 Q14,42 28,47 Q44,38 60,44 Q74,37 90,43 L90,56 Z" fill="#5BAF3F"/>
-      </svg>
-      <span style="display:flex;flex-direction:column;line-height:1.1;">
-        <span style="font-size:1rem;font-weight:700;color:#fff;letter-spacing:0.01em;">Squamish <span style="color:#5BAF3F;">Civic Forum</span></span>
+    <a href="index.html" class="sf-nav-logo" style="display:flex;align-items:center;padding:6px 0;">
+      <img src="scf-logo-nav.svg" alt="Squamish Civic Forum" style="height:40px;width:auto;display:block;filter:brightness(0) invert(1);" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <span style="display:none;flex-direction:column;line-height:1.1;">
+        <span style="font-size:1rem;font-weight:700;color:#fff;">Squamish <span style="color:#5BAF3F;">Civic Forum</span></span>
         <span style="font-size:0.6rem;font-weight:600;color:rgba(255,255,255,0.4);letter-spacing:0.1em;text-transform:uppercase;">Growing Grassroots Engagement</span>
       </span>
     </a>
