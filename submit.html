@@ -251,33 +251,29 @@
         <!-- STEP 1: ABOUT YOU -->
         <div class="form-section active" id="section1">
           <div class="section-heading">
-            <h2>About you</h2>
-            <p>Optionally share your details so we can follow up. You can stay anonymous.</p>
+            <h2>Your information</h2>
+            <p>Your details are linked to your account so we can follow up on your submission.</p>
           </div>
 
-          <label class="anon-toggle">
-            <input type="checkbox" id="anonCheck" onchange="toggleAnon(this)" />
-            <div>
-              <strong>Submit anonymously</strong>
-              <span> — your name and email won't be collected</span>
-            </div>
-          </label>
+          <div id="authGateMsg" style="display:none;background:#fff8ec;border:1.5px solid #C8860A;border-radius:10px;padding:14px 18px;margin-bottom:16px;font-size:0.9rem;">
+            ⚠️ You need to be <a href="members.html" style="color:var(--navy);font-weight:700;">signed in</a> to submit an issue.
+          </div>
 
           <div id="identityFields">
             <div class="form-row two">
               <div class="field">
-                <label>First Name</label>
-                <input type="text" id="firstName" placeholder="Your first name" />
+                <label>First Name <span style="color:#c0392b;">*</span></label>
+                <input type="text" id="firstName" placeholder="Your first name" required />
               </div>
               <div class="field">
-                <label>Last Name <span class="hint">(optional)</span></label>
+                <label>Last Name</label>
                 <input type="text" id="lastName" placeholder="Your last name" />
               </div>
             </div>
             <div class="form-row two">
               <div class="field">
-                <label>Email <span class="hint">(optional)</span></label>
-                <input type="email" id="email" placeholder="your@email.com" />
+                <label>Email <span style="color:#c0392b;">*</span></label>
+                <input type="email" id="email" placeholder="your@email.com" required />
               </div>
               <div class="field">
                 <label>Phone <span class="hint">(optional)</span></label>
@@ -545,10 +541,43 @@
   <a href="index.html">Squamish Civic Forum</a> — Growing Grassroots Engagement. · Squamish, BC · Non-partisan
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
+  // ── AUTH: require login to submit ────────────────────────────
+  const SB_URL  = 'https://dfcsqpgltjlbzdwxughu.supabase.co'
+  const SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmY3NxcGdsdGpsYnpkd3h1Z2h1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2NzUzNDcsImV4cCI6MjA4ODI1MTM0N30.L9RbmB6QAi-XJTPMyIHpTUhUvZdE0YTxpKW4mApTGMw'
+  const sb = supabase.createClient(SB_URL, SB_ANON)
+  let currentUser = null
+
+  sb.auth.getSession().then(({ data: { session } }) => {
+    if (!session) {
+      // Not logged in — show warning, disable submit
+      const msg = document.getElementById('authGateMsg')
+      if (msg) msg.style.display = 'block'
+      const btn = document.querySelector('.btn-submit')
+      if (btn) { btn.textContent = 'Sign in to submit →'; btn.onclick = () => window.location.href = 'members.html' }
+      return
+    }
+    currentUser = session.user
+    // Pre-fill fields from account
+    const meta = session.user.user_metadata || {}
+    const full = meta.full_name || ''
+    const parts = full.split(' ')
+    if (document.getElementById('firstName')) document.getElementById('firstName').value = parts[0] || ''
+    if (document.getElementById('lastName'))  document.getElementById('lastName').value  = parts.slice(1).join(' ') || ''
+    if (document.getElementById('email'))     document.getElementById('email').value     = session.user.email || ''
+  })
+
   let currentStep = 1;
 
   function nextStep(n) {
+    // Validate step 1: name + email required
+    if (currentStep === 1) {
+      const fn = document.getElementById('firstName')?.value.trim()
+      const em = document.getElementById('email')?.value.trim()
+      if (!fn) { alert('Please enter your first name.'); return }
+      if (!em) { alert('Please enter your email address.'); return }
+    }
     document.getElementById('section' + currentStep).classList.remove('active');
     document.getElementById('step' + currentStep).classList.remove('active');
     document.getElementById('step' + currentStep).classList.add('done');
@@ -559,10 +588,6 @@
     document.getElementById('formCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  function toggleAnon(cb) {
-    document.getElementById('identityFields').style.display = cb.checked ? 'none' : 'block';
-  }
-
   function updateCount(el, countId) {
     document.getElementById(countId).textContent = el.value.length;
   }
@@ -570,15 +595,17 @@
   const API = 'https://squamish-future-api-ilbv.vercel.app';
 
   async function submitForm() {
+    if (!currentUser) { window.location.href = 'members.html'; return; }
     const btn = document.querySelector('.btn-submit');
     if (btn) { btn.textContent = 'Submitting…'; btn.disabled = true; }
 
-    const firstName = document.getElementById('firstName')?.value || '';
-    const lastName = document.getElementById('lastName')?.value || '';
-    const anon = document.getElementById('anonCheck')?.checked;
-    const full_name = anon ? '' : [firstName, lastName].filter(Boolean).join(' ');
-    const email = anon ? '' : (document.getElementById('email')?.value || '');
-    const phone = anon ? '' : (document.getElementById('phone')?.value || '');
+    const firstName = document.getElementById('firstName')?.value.trim() || '';
+    const lastName = document.getElementById('lastName')?.value.trim() || '';
+    const full_name = [firstName, lastName].filter(Boolean).join(' ');
+    const email = document.getElementById('email')?.value.trim() || '';
+    const phone = document.getElementById('phone')?.value.trim() || '';
+
+    if (!full_name || !email) { alert('Please fill in your name and email.'); if (btn) { btn.textContent = '✓ Submit My Issue'; btn.disabled = false; } return; }
     const title = document.getElementById('issueTitle')?.value || '';
     const description = document.getElementById('issueDesc')?.value || '';
     const rawCategory = document.querySelector('input[name="category"]:checked')?.value || 'General';
