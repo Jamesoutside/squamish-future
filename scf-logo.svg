@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 72" role="img" aria-label="Squamish Civic Forum">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 62" role="img" aria-label="Squamish Civic Forum">
 
   <!-- ── MOUNTAIN MARK ─────────────────────────────── -->
   <!-- Back left peak — tallest, dark navy -->
@@ -28,13 +28,5 @@
     fill="#1B3D6E"
     letter-spacing="0.5">Civic Forum</text>
 
-  <!-- Tagline -->
-  <text x="109" y="66"
-    font-family="Open Sans, sans-serif"
-    font-size="7.5"
-    font-weight="600"
-    fill="#2E7B8B"
-    letter-spacing="1.5"
-    text-transform="uppercase">GROWING GRASSROOTS ENGAGEMENT</text>
 
 </svg>
